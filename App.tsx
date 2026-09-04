@@ -15,12 +15,15 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
 function PlayerScreen({ navigation }: any){
     const [player1, setPlayer1] = useState<string>('');
   const [player2, setPlayer2] = useState<string>('');
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to Tic-Tac-Toe!</Text>
+
       <TextInput
         placeholder="Player 1 Name"
         value={player1}
@@ -33,6 +36,7 @@ function PlayerScreen({ navigation }: any){
         onChangeText={setPlayer2}
         style={styles.input}
       />
+
       <Button
         title="Start Game"
         onPress={() => navigation.navigate('Game', {player1: player1, player2: player2})}
@@ -45,7 +49,6 @@ function GameScreen({ navigation, route} : any){
   const { player1, player2 } = route.params; 
   const [player1Turn, setPlayer1Turn] = useState<boolean>(true);
 
-  
   const [block1, setBlock1] = useState<number>(0);
   const [block2, setBlock2] = useState<number>(0);
   const [block3, setBlock3] = useState<number>(0);
@@ -193,11 +196,43 @@ function GameScreen({ navigation, route} : any){
 
   const handlePress = (index: number) => {
     console.log(`Cell ${index} pressed`);
-    if (player1Turn){
-      setBlock1(1); 
-    } else {
-      setBlock1(2);
+
+    if (index === 0) {
+      player1Turn ? setBlock1(1) : setBlock1(2);
     }
+
+    if (index === 1) {
+      player1Turn ? setBlock2(1) : setBlock2(2);
+    }
+
+    if (index === 2) {
+      player1Turn ? setBlock3(1) : setBlock3(2);
+    }
+
+    if (index === 3) {
+      player1Turn ? setBlock4(1) : setBlock4(2);
+    }
+
+    if (index === 4) {
+      player1Turn ? setBlock5(1) : setBlock5(2);
+    }
+    
+    if (index === 5) {
+      player1Turn ? setBlock6(1) : setBlock6(2);
+    }
+
+    if (index === 6) {
+      player1Turn ? setBlock7(1) : setBlock7(2);
+    }
+
+    if (index === 7) {
+      player1Turn ? setBlock8(1) : setBlock8(2);
+    }
+    
+    if (index === 8) {
+      player1Turn ? setBlock9(1) : setBlock9(2);
+    }
+
     setPlayer1Turn(!player1Turn);
   };
 
@@ -209,7 +244,7 @@ function GameScreen({ navigation, route} : any){
         {player1Turn ? `${player1}'s Turn` : `${player2}'s Turn`}
       </Text>
 
-      {/* Board layout: 3 rows of 3 cells - Note the <Text> component values */}
+      
       <View style={styles.row}>
         <TouchableHighlight style={styles.cell} onPress={() => handlePress(0)}>
           <Text style={styles.cellText}>{block1Content}</Text>
