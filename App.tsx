@@ -36,6 +36,7 @@ function PlayerScreen({ navigation }: any){
         onChangeText={setPlayer2}
         style={styles.input}
       />
+
       <Button
         title="Start Game"
         onPress={() => navigation.navigate('Game', {player1: player1, player2: player2})}
@@ -43,6 +44,7 @@ function PlayerScreen({ navigation }: any){
     </View>
   );
 }
+
 function GameScreen({ navigation, route} : any){
   const { player1, player2 } = route.params; 
   const [player1Turn, setPlayer1Turn] = useState<boolean>(true);
@@ -64,7 +66,7 @@ function GameScreen({ navigation, route} : any){
       default:
         return '';
     }
-  };
+  };  
   let winner: number = 0;
   if (block1 > 0 && block1 === block2 && block2 === block3) winner = block1;
   if (block4 > 0 && block4 === block5 && block5 === block6) winner = block4;
@@ -74,37 +76,19 @@ function GameScreen({ navigation, route} : any){
   if (block3 > 0 && block3 === block6 && block6 === block9) winner = block3;
   if (block1 > 0 && block1 === block5 && block5 === block9) winner = block1;
   if (block3 > 0 && block3 === block5 && block5 === block7) winner = block3;
-  const handlePress = (index: number) => {
-    if (winner !== 0) return;
-    if (index === 0) {
-      player1Turn ? setBlock1(1) : setBlock1(2);
+
+
+  const handlePress = (block: number, setBlock: (value: number) => void) => {
+    if (winner !== 0) return; 
+
+    if (block !== 0) {
+      return; 
     }
-    if (index === 1) {
-      player1Turn ? setBlock2(1) : setBlock2(2);
-    }
-    if (index === 2) {
-      player1Turn ? setBlock3(1) : setBlock3(2);
-    }
-    if (index === 3) {
-      player1Turn ? setBlock4(1) : setBlock4(2);
-    }
-    if (index === 4) {
-      player1Turn ? setBlock5(1) : setBlock5(2);
-    } 
-    if (index === 5) {
-      player1Turn ? setBlock6(1) : setBlock6(2);
-    }
-    if (index === 6) {
-      player1Turn ? setBlock7(1) : setBlock7(2);
-    }
-    if (index === 7) {
-      player1Turn ? setBlock8(1) : setBlock8(2);
-    }
-    if (index === 8) {
-      player1Turn ? setBlock9(1) : setBlock9(2);
-    }
+    player1Turn ? setBlock(1) : setBlock(2);
+
     setPlayer1Turn(!player1Turn);
   };
+
   return(
     <View style={styles.container}>
       <Text style={styles.title}>{player1} vs. {player2}</Text>
@@ -114,35 +98,62 @@ function GameScreen({ navigation, route} : any){
       </Text>
       <View>
         <View style={styles.row}>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(0)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+            onPress={() => handlePress(block1, setBlock1)}
+          >
             <Text style={styles.cellText}>{contentFor(block1)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(1)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+            onPress={() => handlePress(block2, setBlock2)}
+       	  >
             <Text style={styles.cellText}>{contentFor(block2)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(2)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+            onPress={() => handlePress(block3, setBlock3)}
+          >
             <Text style={styles.cellText}>{contentFor(block3)}</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.row}>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(3)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+            onPress={() => handlePress(block4, setBlock4)}
+          >
             <Text style={styles.cellText}>{contentFor(block4)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(4)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+            onPress={() => handlePress(block5, setBlock5)}
+          >
             <Text style={styles.cellText}>{contentFor(block5)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(5)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+            onPress={() => handlePress(block6, setBlock6)}
+          >
             <Text style={styles.cellText}>{contentFor(block6)}</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.row}>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(6)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+	        onPress={() => handlePress(block7, setBlock7)}
+          >
             <Text style={styles.cellText}>{contentFor(block7)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(7)}>
+          <TouchableHighlight 
+	        style={styles.cell} 
+            onPress={() => handlePress(block8, setBlock8)}
+          >
             <Text style={styles.cellText}>{contentFor(block8)}</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.cell} onPress={() => handlePress(8)}>
+          <TouchableHighlight 
+            style={styles.cell} 
+            onPress={() => handlePress(block9, setBlock9)}
+          >
             <Text style={styles.cellText}>{contentFor(block9)}</Text>
           </TouchableHighlight>
         </View>
